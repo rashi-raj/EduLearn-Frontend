@@ -1,59 +1,73 @@
-# EdulearnFrontend
+# EduLearn Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.6.
+EduLearn Frontend is the Angular-based user interface for the **EduLearn Online Learning Platform**. It provides role-based dashboards and smooth user interaction for Students, Instructors, and Admins.
 
-## Development server
+---
 
-To start a local development server, run:
+## Project Overview
 
-```bash
-ng serve
-```
+EduLearn is a full-stack e-learning platform where users can register, login, browse courses, enroll in courses, access lessons, track progress, attempt quizzes, and manage learning activities based on their role.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+This frontend communicates with the backend microservices through the **API Gateway**.
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Tech Stack
 
-```bash
-ng generate component component-name
-```
+| Technology | Purpose |
+|---|---|
+| Angular | Frontend framework |
+| TypeScript | Application logic |
+| HTML5 | Page structure |
+| CSS3 | Styling and layout |
+| Reactive Forms | Login, register, forms and validation |
+| Angular Router | Page navigation |
+| HTTP Client | API communication |
+| JWT | Secured user session |
+| Razorpay Test Mode | Payment testing |
+| Kafka-connected Notification Flow | Notification handling through backend |
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
-```
+## Main Features
 
-## Building
+### Authentication
 
-To build the project run:
+- User registration
+- User login
+- JWT token handling
+- Role-based redirection
+- Logout
+- Protected routes
+- Google OAuth login support, if enabled from backend
 
-```bash
-ng build
-```
+### Role-Based Access
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+| Role | Access |
+|---|---|
+| Student | Browse courses, enroll, view lessons, track progress, make payments, attempt quizzes |
+| Instructor | Create/manage courses, add lessons, view enrolled students |
+| Admin | Manage users, courses, platform data and overall system access |
 
-## Running unit tests
+---
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## Frontend Flow
 
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+```text
+User opens Angular App
+        ↓
+Angular Router loads page
+        ↓
+Component displays UI
+        ↓
+User performs action
+        ↓
+Angular Service calls backend API
+        ↓
+Request goes through API Gateway
+        ↓
+Backend microservice processes request
+        ↓
+Response comes back to frontend
+        ↓
+UI updates dynamically
