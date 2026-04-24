@@ -1,0 +1,73 @@
+<div class="page-shell">
+  <div class="page-top">
+    <div>
+      <p class="eyebrow">ACCOUNT</p>
+      <h1>Settings</h1>
+      <p class="subtext">Manage your account and preferences.</p>
+    </div>
+    <button class="back-btn" (click)="goBack()">Back to Dashboard</button>
+  </div>
+
+  <div class="hero-card">
+    <div class="hero-left">
+      <div class="avatar-wrap">{{ initials() }}</div>
+
+      <div>
+        <p class="hero-overline">PROFILE OVERVIEW</p>
+        <h2>{{ userName() }}</h2>
+        <p class="hero-email">{{ userEmail() }}</p>
+        <span class="role-chip">{{ roleLabel() }}</span>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <p>
+        Your account is active and connected to the EduLearn platform.
+      </p>
+    </div>
+  </div>
+
+  <div class="settings-grid">
+    <div class="settings-card">
+      <h3>Account Information</h3>
+      <p class="card-desc">Your currently available account details.</p>
+
+      <div class="info-grid">
+        <div class="info-item">
+          <span>Full Name</span>
+          <strong>{{ userName() }}</strong>
+        </div>
+
+        <div class="info-item">
+          <span>Email Address</span>
+          <strong>{{ userEmail() }}</strong>
+        </div>
+
+        <div class="info-item">
+          <span>Role</span>
+          <strong>{{ roleLabel() }}</strong>
+        </div>
+
+        <div class="info-item">
+          <span>Access</span>
+          <strong>Active</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="settings-card">
+      <h3>Session</h3>
+      <p class="card-desc">Manage your current session.</p>
+
+      <div class="session-actions">
+        <button class="secondary-btn" (click)="goBack()">
+          Go to Dashboard
+        </button>
+
+        <button class="logout-btn" (click)="logout()">
+          Logout
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

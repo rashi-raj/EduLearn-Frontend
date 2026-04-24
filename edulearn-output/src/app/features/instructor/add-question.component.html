@@ -1,0 +1,85 @@
+<div class="page-shell">
+  <div class="page-top">
+    <div>
+      <p class="eyebrow">INSTRUCTOR SPACE</p>
+      <h1>Add Question</h1>
+      <p class="subtext">Add a multiple-choice question to your quiz.</p>
+    </div>
+
+    <button class="secondary-btn" type="button" (click)="goBack()">
+      Back to Quizzes
+    </button>
+  </div>
+
+  <form class="form-card" [formGroup]="form" (ngSubmit)="submit()">
+    <div class="field-group">
+      <label>Question Text</label>
+      <textarea
+        formControlName="text"
+        rows="4"
+        placeholder="Enter question text"
+      ></textarea>
+      <small class="error" *ngIf="questionError()">{{ questionError() }}</small>
+    </div>
+
+    <div class="field-group">
+      <label>Option A</label>
+      <input type="text" formControlName="optionA" placeholder="Enter option A" />
+    </div>
+
+    <div class="field-group">
+      <label>Option B</label>
+      <input type="text" formControlName="optionB" placeholder="Enter option B" />
+    </div>
+
+    <div class="field-group">
+      <label>Option C</label>
+      <input type="text" formControlName="optionC" placeholder="Enter option C" />
+    </div>
+
+    <div class="field-group">
+      <label>Option D</label>
+      <input type="text" formControlName="optionD" placeholder="Enter option D" />
+    </div>
+
+    <div class="field-group">
+      <label>Question Type</label>
+      <input type="text" formControlName="type" readonly />
+    </div>
+
+    <div class="field-row">
+      <div class="field-group">
+        <label>Correct Option</label>
+        <div class="select-wrap">
+          <select formControlName="correctOption">
+            <option value="" disabled>Select correct option</option>
+            <option value="A">Option A</option>
+            <option value="B">Option B</option>
+            <option value="C">Option C</option>
+            <option value="D">Option D</option>
+          </select>
+        </div>
+        <small class="error" *ngIf="correctOptionError()">{{ correctOptionError() }}</small>
+      </div>
+
+      <div class="field-group">
+        <label>Marks</label>
+        <input type="number" formControlName="marks" min="1" />
+        <small class="error" *ngIf="marksError()">{{ marksError() }}</small>
+      </div>
+
+      <div class="field-group">
+        <label>Question Order</label>
+        <input type="number" formControlName="orderIndex" min="0" />
+        <small class="error" *ngIf="orderIndexError()">{{ orderIndexError() }}</small>
+      </div>
+    </div>
+
+    <button class="primary-btn" type="submit" [disabled]="isSubmitting() || form.invalid">
+      {{ isSubmitting() ? 'Adding Question...' : 'Add Question' }}
+    </button>
+
+    <p class="success" *ngIf="successMessage()">{{ successMessage() }}</p>
+    <p class="error server-error" *ngIf="errorMessage()">{{ errorMessage() }}</p>
+  </form>
+</div>

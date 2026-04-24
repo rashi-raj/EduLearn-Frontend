@@ -1,0 +1,89 @@
+<div class="page-shell">
+  <div class="page-top">
+    <div>
+      <p class="eyebrow">INSTRUCTOR SPACE</p>
+      <h1>My Courses</h1>
+      <p class="subtext">Manage your draft and published courses from one place.</p>
+    </div>
+    <div class="top-actions">
+      <button class="secondary-btn" (click)="goBack()">Back to Dashboard</button>
+      <button class="primary-btn" (click)="createCourse()">Create Course</button>
+    </div>
+  </div>
+
+  <div class="welcome-card">
+    <h2>Welcome, {{ userName() }}</h2>
+    <p>Your instructor course workspace is now connected.</p>
+  </div>
+
+  <div class="state-card" *ngIf="isLoading()">
+    Loading your courses...
+  </div>
+
+  <div class="state-card error" *ngIf="errorMessage() && !isLoading()">
+    {{ errorMessage() }}
+  </div>
+
+  <div class="state-card success" *ngIf="successMessage() && !isLoading()">
+    {{ successMessage() }}
+  </div>
+
+  <div class="empty-card" *ngIf="!isLoading() && !errorMessage() && courseCards().length === 0">
+    <h3>No courses created yet</h3>
+    <p>You have not created any course yet. Start by creating your first course.</p>
+    <button class="primary-btn" (click)="createCourse()">Create Course</button>
+  </div>
+
+  <div class="list-grid" *ngIf="!isLoading() && !errorMessage() && courseCards().length > 0">
+    <div class="list-card" *ngFor="let course of courseCards()">
+      <div class="card-top">
+        <div>
+          <span class="course-tag">{{ course.category }}</span>
+          <h3>{{ course.title }}</h3>
+        </div>
+
+        <span
+          class="status-chip"
+          [ngClass]="{
+            'published': course.status === 'Published',
+            'draft': course.status === 'Draft',
+            'pending': course.status === 'Pending Approval',
+            'rejected': course.status === 'Rejected'
+          }"
+        >
+          {{ course.status }}
+        </span>
+      </div>
+
+      <p class="description">{{ course.description }}</p>
+
+      <div class="meta-grid">
+        <p><strong>Level:</strong> {{ course.level }}</p>
+        <p><strong>Language:</strong> {{ course.language }}</p>
+      </div>
+
+      <div class="card-actions">
+        <button
+          class="secondary-btn small-btn"
+          *ngIf="course.canEdit"
+          (click)="editCourse(course.courseId)"
+        >
+          Edit
+        </button>
+
+        <button
+          class="primary-btn small-btn"
+          *ngIf="course.canRequestApproval"
+          (click)="requestApproval(course.courseId)"
+          [disabled]="actionLoadingCourseId() === course.courseId"
+        >
+          {{
+            actionLoadingCourseId() === course.courseId
+              ? 'Submitting...'
+              : 'Request Approval'
+          }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

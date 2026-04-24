@@ -1,0 +1,83 @@
+<div class="quiz-container" *ngIf="!isLoading(); else loading">
+
+  <div class="top-actions">
+    <button class="back-btn" (click)="goBack()">Back to Quizzes</button>
+  </div>
+
+  <h2>{{ quiz()?.title }}</h2>
+  <p>{{ quiz()?.description }}</p>
+
+  <div *ngIf="errorMessage()" class="error-box">
+    {{ errorMessage() }}
+  </div>
+
+  <div *ngFor="let q of orderedQuestions()" class="question-card">
+    <h3>{{ q.text }}</h3>
+
+    <div class="options">
+      <button
+        type="button"
+        [class.selected]="answers()[q.questionId || ''] === q.optionA"
+        (click)="setAnswer(q.questionId, q.optionA)">
+        {{ q.optionA }}
+      </button>
+
+      <button
+        type="button"
+        [class.selected]="answers()[q.questionId || ''] === q.optionB"
+        (click)="setAnswer(q.questionId, q.optionB)">
+        {{ q.optionB }}
+      </button>
+
+      <button
+        type="button"
+        [class.selected]="answers()[q.questionId || ''] === q.optionC"
+        (click)="setAnswer(q.questionId, q.optionC)">
+        {{ q.optionC }}
+      </button>
+
+      <button
+        type="button"
+        [class.selected]="answers()[q.questionId || ''] === q.optionD"
+        (click)="setAnswer(q.questionId, q.optionD)">
+        {{ q.optionD }}
+      </button>
+    </div>
+  </div>
+
+  <button
+    class="submit-btn"
+    type="button"
+    [disabled]="isSubmitting()"
+    (click)="submitQuiz()">
+    {{ isSubmitting() ? 'Submitting...' : 'Submit Quiz' }}
+  </button>
+
+  <div *ngIf="submitResult()" class="result-card">
+    <h3>Quiz Submitted</h3>
+    <div class="result-meta">
+      <span><strong>Score:</strong> {{ submitResult()?.score }}</span>
+      <span
+        [class.pass-chip]="submitResult()?.passed"
+        [class.fail-chip]="submitResult()?.passed === false">
+        {{ submitResult()?.passed ? 'Passed' : 'Not Passed' }}
+      </span>
+    </div>
+  </div>
+<div class="popup-backdrop" *ngIf="showMaxAttemptsPopup()">
+  <div class="popup-card">
+    <h3>Maximum Attempts Reached</h3>
+    <p>{{ maxAttemptsPopupMessage() }}</p>
+
+    <div class="popup-actions">
+      <button class="gradient-btn" type="button" (click)="closeMaxAttemptsPopup()">
+        Back to Quizzes
+      </button>
+    </div>
+  </div>
+</div>
+</div>
+
+<ng-template #loading>
+  <div class="loading">Loading quiz...</div>
+</ng-template>

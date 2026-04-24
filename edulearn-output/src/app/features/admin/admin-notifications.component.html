@@ -1,0 +1,17 @@
+<div class="page-shell">
+  <div class="page-top">
+    <div>
+      <p class="eyebrow">ADMIN PANEL</p>
+      <h1>Notifications</h1>
+      <p class="subtext">Monitor platform alerts and important system events.</p>
+    </div>
+    <button class="secondary-btn" (click)="goBack()">Back to Dashboard</button>
+  </div>
+
+  <div class="list-grid">
+    <div class="list-card" *ngFor="let item of notifications()">
+      <h3>{{ item.title }}</h3>
+      <p>{{ item.detail }}</p>
+    </div>
+  </div>
+</div>

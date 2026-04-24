@@ -1,0 +1,56 @@
+.discussion-hero {
+  max-width: 1000px;              
+  margin: 40px auto;            
+  border-radius: 28px;
+  padding: 36px;
+
+  background: linear-gradient(135deg, #7b3ff2, #e6399b);
+  box-shadow: 0 30px 60px rgba(123, 63, 242, 0.25);
+}
+
+.hero-content {
+  max-width: 650px;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  font-size: 0.8rem;
+  letter-spacing: 0.16em;
+  font-weight: 700;
+  opacity: 0.9;
+}
+
+.discussion-hero h2 {
+  margin: 0 0 14px;
+  font-size: 2.4rem;
+  font-weight: 800;
+}
+
+.hero-text {
+  font-size: 1rem;
+  line-height: 1.7;
+  opacity: 0.95;
+  margin-bottom: 10px;
+}
+
+.sub-note {
+  font-size: 0.9rem;
+  opacity: 0.85;
+  margin-bottom: 22px;
+}
+
+.hero-btn {
+  border: none;
+  background: white;
+  color: #7b3ff2;
+  padding: 12px 22px;
+  border-radius: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.hero-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+}

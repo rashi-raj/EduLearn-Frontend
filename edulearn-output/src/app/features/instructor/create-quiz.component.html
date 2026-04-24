@@ -1,0 +1,111 @@
+<div class="page-shell">
+  <div class="page-top">
+    <div>
+      <p class="eyebrow">INSTRUCTOR SPACE</p>
+      <h1>Create Quiz</h1>
+      <p class="subtext">Create a quiz for one of your courses and set the passing rules.</p>
+    </div>
+
+    <button class="secondary-btn" type="button" (click)="goBack()">
+      Back to Quizzes
+    </button>
+  </div>
+
+  <div class="state-card" *ngIf="isLoadingCourses()">
+    Loading your courses...
+  </div>
+
+  <div class="state-card error" *ngIf="errorMessage() && !isLoadingCourses()">
+    {{ errorMessage() }}
+  </div>
+
+  <form
+    class="form-card"
+    [formGroup]="form"
+    (ngSubmit)="submit()"
+    *ngIf="!isLoadingCourses()"
+  >
+    <div class="field-group">
+      <label>Select Course</label>
+      <div class="select-wrap">
+        <select formControlName="courseId">
+          <option value="" disabled>Select course</option>
+          <option *ngFor="let course of courses()" [value]="course.courseId">
+            {{ course.title }}
+          </option>
+        </select>
+      </div>
+      <small class="error" *ngIf="courseError()">{{ courseError() }}</small>
+    </div>
+
+    <div class="field-group">
+      <label>Quiz Title</label>
+      <input
+        type="text"
+        formControlName="title"
+        placeholder="Enter quiz title"
+      />
+      <small class="error" *ngIf="titleError()">{{ titleError() }}</small>
+    </div>
+
+    <div class="field-group">
+      <label>Description</label>
+      <textarea
+        formControlName="description"
+        rows="4"
+        placeholder="Enter quiz description"
+      ></textarea>
+      <small class="error" *ngIf="descriptionError()">{{ descriptionError() }}</small>
+    </div>
+
+    <div class="field-row">
+      <div class="field-group">
+        <label>Passing Score (%)</label>
+        <input
+          type="number"
+          formControlName="passingScore"
+          min="0"
+          max="100"
+          placeholder="e.g. 40"
+        />
+        <small class="error" *ngIf="passingScoreError()">{{ passingScoreError() }}</small>
+      </div>
+
+      <div class="field-group">
+        <label>Time Limit (minutes)</label>
+        <input
+          type="number"
+          formControlName="timeLimitMinutes"
+          min="1"
+          placeholder="e.g. 20"
+        />
+        <small class="error" *ngIf="timeLimitError()">{{ timeLimitError() }}</small>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label>Maximum Attempts</label>
+      <input
+        type="number"
+        formControlName="maxAttempts"
+        min="1"
+        placeholder="e.g. 3"
+      />
+      <small class="error" *ngIf="maxAttemptsError()">{{ maxAttemptsError() }}</small>
+    </div>
+
+    <div class="info-card">
+      <h3>Quiz Setup Tips</h3>
+      <p>
+        Set a reasonable passing score and time limit based on lesson difficulty.
+        You can add questions after creating the quiz.
+      </p>
+    </div>
+
+    <button class="primary-btn" type="submit" [disabled]="isSubmitting() || form.invalid">
+      {{ isSubmitting() ? 'Creating Quiz...' : 'Create Quiz' }}
+    </button>
+
+    <p class="success" *ngIf="successMessage()">{{ successMessage() }}</p>
+  </form>
+</div>

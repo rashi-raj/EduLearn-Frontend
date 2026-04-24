@@ -1,0 +1,65 @@
+<div class="page-shell">
+  <div class="page-top">
+    <div>
+      <p class="eyebrow">INSTRUCTOR SPACE</p>
+      <h1>Quizzes</h1>
+      <p class="subtext">Create and manage quizzes for your courses.</p>
+    </div>
+    <div class="top-actions">
+      <button class="secondary-btn" (click)="goBack()">Back to Dashboard</button>
+      <button class="primary-btn" (click)="createQuiz()">Create Quiz</button>
+    </div>
+  </div>
+
+  <div class="state-card" *ngIf="isLoading()">
+    Loading your quizzes...
+  </div>
+
+  <div class="state-card error" *ngIf="errorMessage() && !isLoading()">
+    {{ errorMessage() }}
+  </div>
+
+  <div class="empty-card" *ngIf="!isLoading() && !errorMessage() && quizCards().length === 0">
+    <h3>No quizzes created yet</h3>
+    <p>Create a quiz for one of your courses to start assessing learners.</p>
+    <button class="primary-btn" (click)="createQuiz()">Create Quiz</button>
+  </div>
+
+  <div class="list-grid" *ngIf="!isLoading() && !errorMessage() && quizCards().length > 0">
+    <div class="list-card" *ngFor="let quiz of quizCards()">
+      <div class="card-top">
+        <div>
+          <h3>{{ quiz.title }}</h3>
+          <p class="course-name">{{ quiz.courseTitle }}</p>
+        </div>
+        <span class="status-chip">{{ quiz.status }}</span>
+      </div>
+
+      <p class="description">{{ quiz.description }}</p>
+
+      <div class="meta-grid">
+        <p><strong>Passing Score:</strong> {{ quiz.passingScore }}</p>
+        <p><strong>Time Limit:</strong> {{ quiz.timeLimit }}</p>
+      </div>
+
+      <div class="card-actions">
+  <button class="primary-btn small-btn" (click)="addQuestion(quiz.quizId)">
+    Add Question
+  </button>
+
+  <button
+    class="secondary-btn small-btn"
+    *ngIf="quiz.status === 'Draft'"
+    (click)="publishQuiz(quiz.quizId)">
+    Publish Quiz
+  </button>
+
+  <span
+    class="published-badge"
+    *ngIf="quiz.status === 'Published'">
+    Published
+  </span>
+</div>
+    </div>
+  </div>
+</div>

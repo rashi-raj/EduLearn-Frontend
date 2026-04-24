@@ -1,0 +1,367 @@
+<div class="dashboard-shell">
+  <div
+    class="mobile-overlay"
+    [class.show]="sidebarOpen()"
+    (click)="closeSidebar()"
+  ></div>
+
+  <aside class="sidebar" [class.open]="sidebarOpen()">
+    <div class="sidebar-top">
+      <div class="brand-mark">
+        <span class="brand-logo">✦</span>
+        <div>
+          <h2>edulearn</h2>
+          <p>{{ roleLabel() }} Panel</p>
+        </div>
+      </div>
+
+      <button class="icon-btn mobile-close" (click)="closeSidebar()">✕</button>
+    </div>
+
+    <nav class="sidebar-nav">
+      <button class="nav-item active" (click)="navigateTo('/dashboard')">
+        <span>🏠</span>
+        <span>Dashboard</span>
+      </button>
+
+      <button class="nav-item" *ngIf="user().role === 'STUDENT'" (click)="navigateTo('/my-courses')">
+        <span>📚</span>
+        <span>My Courses</span>
+      </button>
+
+      <button class="nav-item" *ngIf="user().role === 'STUDENT'" (click)="navigateTo('/student/progress')">
+        <span>📈</span>
+        <span>Progress</span>
+      </button>
+
+      <button class="nav-item" *ngIf="user().role === 'STUDENT'" (click)="navigateTo('/student/quizzes')">
+        <span>📝</span>
+        <span>Quizzes</span>
+      </button>
+
+      <button class="nav-item" *ngIf="user().role === 'STUDENT'" (click)="navigateTo('/student/certificates')">
+        <span>🏆</span>
+        <span>Certificates</span>
+      </button>
+
+      <button class="nav-item" *ngIf="user().role === 'STUDENT'" (click)="navigateTo('/student/payments')">
+        <span>💳</span>
+        <span>Payments</span>
+      </button>
+
+      <button class="nav-item" *ngIf="user().role === 'INSTRUCTOR'" (click)="navigateTo('/instructor/courses')">
+        <span>📘</span>
+        <span>My Courses</span>
+      </button>
+
+      <button class="nav-item" *ngIf="user().role === 'INSTRUCTOR'" (click)="navigateTo('/instructor/lessons')">
+        <span>🎬</span>
+        <span>Lessons</span>
+      </button>
+
+      <button class="nav-item" *ngIf="user().role === 'INSTRUCTOR'" (click)="navigateTo('/instructor/quizzes')">
+        <span>🧠</span>
+        <span>Quizzes</span>
+      </button>
+
+      <button class="nav-item" *ngIf="user().role === 'INSTRUCTOR'" (click)="navigateTo('/instructor/learners')">
+        <span>👥</span>
+        <span>Learners</span>
+      </button>
+
+      <button class="nav-item" *ngIf="user().role === 'INSTRUCTOR'" (click)="navigateTo('/instructor/analytics')">
+        <span>📊</span>
+        <span>Analytics</span>
+      </button>
+
+      <button class="nav-item" *ngIf="user().role === 'ADMIN'" (click)="navigateTo('/admin/users')">
+        <span>👤</span>
+        <span>Users</span>
+      </button>
+
+      <button class="nav-item" *ngIf="user().role === 'ADMIN'" (click)="navigateTo('/admin/approvals')">
+        <span>✅</span>
+        <span>Approvals</span>
+      </button>
+
+      <button class="nav-item" *ngIf="user().role === 'ADMIN'" (click)="navigateTo('/admin/course-approvals')">
+        <span>📚</span>
+        <span>Course Approvals</span>
+      </button>
+
+      <button class="nav-item" *ngIf="user().role === 'ADMIN'" (click)="navigateTo('/admin/payments')">
+        <span>💰</span>
+        <span>Payments</span>
+      </button>
+
+      <button class="nav-item" *ngIf="user().role === 'ADMIN'" (click)="navigateTo('/admin/analytics')">
+        <span>📉</span>
+        <span>Analytics</span>
+      </button>
+
+      <button class="nav-item" (click)="navigateTo('/discussions')">
+        <span>💬</span>
+        <span>Discussions</span>
+      </button>
+
+      <button class="nav-item" (click)="navigateTo('/settings')">
+        <span>⚙️</span>
+        <span>Settings</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="mini-card">
+        <p class="mini-label">Signed in as</p>
+        <h4>{{ user().fullName }}</h4>
+        <span>{{ user().email }}</span>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-panel">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="icon-btn menu-btn" (click)="toggleSidebar()">☰</button>
+
+
+      </div>
+
+      <div class="topbar-right">
+        <div class="notif-wrapper">
+          <button class="icon-btn" (click)="toggleNotifications()">
+            🔔
+            <span class="notif-badge" *ngIf="unreadCount() > 0">{{ unreadCount() }}</span>
+          </button>
+
+          <div class="notif-dropdown" *ngIf="notificationsOpen()">
+            <div class="notif-dropdown-header">
+              <h3>Notifications</h3>
+              <a href="javascript:void(0)" (click)="markAllNotificationsRead()">Mark all read</a>
+            </div>
+
+            <div class="notif-dropdown-body" *ngIf="notifications().length; else emptyNotif">
+              <div class="notif-dropdown-item" *ngFor="let n of notifications().slice(0, 8)"
+                   [class.unread]="!n.isRead">
+                <strong>{{ n.title }}</strong>
+                <p>{{ n.message }}</p>
+              </div>
+            </div>
+
+            <ng-template #emptyNotif>
+              <div class="notif-dropdown-body">
+                <div class="notif-dropdown-item">
+                  <strong>No notifications</strong>
+                  <p>You're all caught up!</p>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+
+        <span class="role-chip">{{ roleLabel() }}</span>
+
+        <div class="user-pill">
+          <div class="avatar">{{ user().fullName.charAt(0) }}</div>
+          <div class="user-meta">
+            <strong>{{ user().fullName }}</strong>
+            <span>{{ user().email }}</span>
+          </div>
+        </div>
+
+        <button class="logout-btn" (click)="logout()">Logout</button>
+      </div>
+    </header>
+
+    <section class="hero-card">
+      <div class="hero-content">
+        <p class="hero-overline">WELCOME BACK</p>
+        <h1>{{ pageTitle() }}</h1>
+        <p class="hero-text">
+          Build a smoother learning experience with a role-based dashboard for
+          courses, lessons, assessments, certificates, payments, and more.
+        </p>
+
+        <div class="hero-actions">
+          <button
+            class="primary-btn"
+            *ngIf="user().role === 'STUDENT'"
+            (click)="navigateTo('/my-courses')"
+          >
+            Explore Features
+          </button>
+
+          <button
+            class="primary-btn"
+            *ngIf="user().role === 'ADMIN'"
+            (click)="navigateTo('/admin/approvals')"
+          >
+            Explore Features
+          </button>
+
+          <button
+            class="primary-btn"
+            *ngIf="user().role === 'INSTRUCTOR'"
+            (click)="navigateTo('/instructor/courses')"
+          >
+            Explore Features
+          </button>
+
+          <button class="secondary-btn" (click)="navigateTo('/settings')">
+            View Profile
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="stats-grid">
+      <article class="stat-card" *ngFor="let item of stats()">
+        <p>{{ item.title }}</p>
+        <h3>{{ item.value }}</h3>
+        <span>{{ item.hint }}</span>
+      </article>
+    </section>
+
+    <section class="section-block">
+      <div class="section-head">
+        <h2>Quick Actions</h2>
+        <a href="javascript:void(0)">View all</a>
+      </div>
+
+      <div class="actions-grid">
+        <article class="action-card" *ngFor="let action of primaryActions()">
+          <h3>{{ action.title }}</h3>
+          <p>{{ action.description }}</p>
+          <button (click)="navigateTo(action.route)">
+            {{ action.buttonLabel }}
+          </button>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-block" *ngIf="user().role === 'STUDENT'">
+      <div class="section-head">
+        <h2>Quiz Overview</h2>
+        <a href="javascript:void(0)" (click)="navigateTo('/student/quizzes')">Open quizzes</a>
+      </div>
+
+      <div class="quiz-dashboard-grid">
+        <section class="panel-card quiz-summary-card">
+          <div class="quiz-summary-grid">
+            <div class="quiz-summary-box">
+              <p>Total Attempts</p>
+              <h3>{{ quizSummary().totalAttempts }}</h3>
+            </div>
+
+            <div class="quiz-summary-box">
+              <p>Passed</p>
+              <h3>{{ quizSummary().passedCount }}</h3>
+            </div>
+
+            <div class="quiz-summary-box">
+              <p>Best Score</p>
+              <h3>{{ quizSummary().bestScore }}%</h3>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel-card quiz-attempts-card">
+          <div class="section-head quiz-head-inner">
+            <h2>Recent Attempts</h2>
+          </div>
+
+          <div class="quiz-attempt-list" *ngIf="recentQuizAttempts().length; else noQuizAttempts">
+            <article class="quiz-attempt-item" *ngFor="let quiz of recentQuizAttempts()">
+              <div class="quiz-attempt-top">
+                <div>
+                  <h3>{{ quiz.title }}</h3>
+                  <p>{{ quiz.attemptedAtText }}</p>
+                </div>
+
+                <span class="quiz-status-chip" [class.pass]="quiz.status === 'Passed'">
+                  {{ quiz.status }}
+                </span>
+              </div>
+
+              <div class="quiz-score-row">
+                <span>Score</span>
+                <strong>{{ quiz.score }}%</strong>
+              </div>
+
+              <div class="progress-bar">
+                <div class="progress-fill" [style.width.%]="quiz.score"></div>
+              </div>
+            </article>
+          </div>
+
+          <ng-template #noQuizAttempts>
+            <div class="empty-quiz-state">
+              <h3>No quiz attempts yet</h3>
+              <p>Start a quiz to see your recent scores and performance summary here.</p>
+              <button class="primary-btn" (click)="navigateTo('/student/quizzes')">
+                Go to Quizzes
+              </button>
+            </div>
+          </ng-template>
+        </section>
+      </div>
+    </section>
+
+    <section class="content-grid content-grid--full">
+
+      <div class="content-right">
+        <section class="panel-card">
+          <div class="section-head">
+            <h2>Notifications</h2>
+            <a href="javascript:void(0)" (click)="markAllNotificationsRead()">Mark all read</a>
+          </div>
+
+          <div class="activity-list" *ngIf="notifications().length; else noNotifications">
+            <div class="activity-item" *ngFor="let n of notifications().slice(0, 5)"
+                 [style.opacity]="n.isRead ? '0.6' : '1'">
+              <strong>{{ n.title }}</strong>
+              <p>{{ n.message }}</p>
+            </div>
+          </div>
+
+          <ng-template #noNotifications>
+            <div class="activity-list">
+              <div class="activity-item">
+                <strong>No notifications yet</strong>
+                <p>You'll see updates here when events occur.</p>
+              </div>
+            </div>
+          </ng-template>
+        </section>
+
+        <section class="panel-card">
+          <div class="section-head">
+            <h2>
+              {{ user().role === 'ADMIN' ? 'Admin Focus' : 'Upcoming' }}
+            </h2>
+          </div>
+
+          <div class="mini-stack">
+            <div class="mini-info">
+              <strong *ngIf="user().role === 'STUDENT'">Next recommended course</strong>
+              <strong *ngIf="user().role === 'INSTRUCTOR'">Next publishing task</strong>
+              <strong *ngIf="user().role === 'ADMIN'">Pending platform task</strong>
+
+              <p *ngIf="user().role === 'STUDENT'">
+                Complete Spring Boot Essentials to unlock advanced backend track.
+              </p>
+
+              <p *ngIf="user().role === 'INSTRUCTOR'">
+                Review quiz pass rates and publish your Microservices course draft.
+              </p>
+
+              <p *ngIf="user().role === 'ADMIN'">
+                18 courses are waiting for review and 3 refunds need approval.
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+</div>

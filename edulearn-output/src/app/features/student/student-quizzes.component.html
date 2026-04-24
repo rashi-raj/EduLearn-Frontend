@@ -1,0 +1,80 @@
+<div class="quiz-page-shell">
+  <div class="quiz-page-top">
+    <button class="back-btn" (click)="goBack()">Back to Dashboard</button>
+  </div>
+
+  <section class="hero-card">
+    <div class="hero-content">
+      <p class="hero-overline">STUDENT SPACE</p>
+      <h1>Assessments</h1>
+      <p class="hero-text">
+        Attempt quizzes from your enrolled courses, improve your scores, and track your performance.
+      </p>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div *ngIf="isLoading()" class="state-card">
+      Loading quizzes...
+    </div>
+
+    <div *ngIf="errorMessage()" class="state-card error">
+      {{ errorMessage() }}
+    </div>
+
+    <div *ngIf="!isLoading() && !errorMessage() && quizCards().length === 0" class="state-card empty">
+      No published quizzes are available for your active courses yet.
+    </div>
+
+    <div class="quiz-grid" *ngIf="quizCards().length > 0">
+      <article class="quiz-card" *ngFor="let quiz of quizCards()">
+        <div class="quiz-card-top">
+          <div>
+            <span class="course-chip">{{ quiz.courseTitle }}</span>
+            <h3>{{ quiz.title }}</h3>
+
+            <p class="quiz-instructor">
+              Instructor: {{ quiz.instructorName }}
+            </p>
+          </div>
+
+          <span class="status-chip" [class.attempted]="quiz.isAttempted">
+            {{ quiz.status }}
+          </span>
+        </div>
+
+        <p class="quiz-description">
+          {{ quiz.description }}
+        </p>
+
+        <div class="quiz-meta-grid">
+          <div class="meta-box">
+            <span class="meta-label">Passing Score</span>
+            <strong>{{ quiz.passingScore }}</strong>
+          </div>
+
+          <div class="meta-box">
+            <span class="meta-label">Time Limit</span>
+            <strong>{{ quiz.timeLimit }}</strong>
+          </div>
+
+          <div class="meta-box">
+            <span class="meta-label">Max Attempts</span>
+            <strong>{{ quiz.maxAttempts }}</strong>
+          </div>
+
+          <div class="meta-box">
+            <span class="meta-label">Best Score</span>
+            <strong>{{ quiz.bestScore }}</strong>
+          </div>
+        </div>
+
+        <div class="quiz-actions">
+          <button class="primary-btn" (click)="startQuiz(quiz.quizId)">
+            {{ quiz.isAttempted ? 'Reattempt Quiz' : 'Start Quiz' }}
+          </button>
+        </div>
+      </article>
+    </div>
+  </section>
+</div>

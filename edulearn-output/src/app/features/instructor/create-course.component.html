@@ -1,0 +1,109 @@
+<div class="page-shell">
+  <div class="page-head">
+    <div>
+      <p class="eyebrow">INSTRUCTOR COURSE WORKSPACE</p>
+      <h1>{{ isEditMode() ? 'Edit Course Draft' : 'Create Course' }}</h1>
+      <p class="subtext">
+        {{ isEditMode()
+          ? 'Update your draft details before sending it for approval.'
+          : 'Create your course draft with pricing, duration, and access validity.' }}
+      </p>
+    </div>
+
+    <button class="secondary-btn" type="button" (click)="goBack()">Back to Courses</button>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <label>Course Title</label>
+    <input
+      type="text"
+      formControlName="title"
+      placeholder="Enter course title"
+    />
+
+    <label>Description</label>
+    <textarea
+      formControlName="description"
+      placeholder="Describe your course"
+      rows="4"
+    ></textarea>
+
+    <label>Category</label>
+    <input
+      type="text"
+      formControlName="category"
+      placeholder="e.g. Development, Design, Business"
+    />
+
+    <label>Level</label>
+    <select formControlName="level">
+      <option value="">Select Level</option>
+      <option value="Beginner">Beginner</option>
+      <option value="Intermediate">Intermediate</option>
+      <option value="Advanced">Advanced</option>
+    </select>
+
+    <small class="error" *ngIf="form.get('level')?.touched && form.get('level')?.invalid">
+      Please select a level
+    </small>
+
+    <label>Price (₹)</label>
+    <input
+      type="number"
+      formControlName="price"
+      placeholder="Enter price (0 for free)"
+      min="0"
+    />
+
+    <small class="error" *ngIf="form.get('price')?.touched && form.get('price')?.invalid">
+      Price must be 0 or greater
+    </small>
+
+    <label>Language</label>
+    <input
+      type="text"
+      formControlName="language"
+      placeholder="e.g. English, Hindi"
+    />
+
+    <label>Thumbnail URL</label>
+    <input
+      type="text"
+      formControlName="thumbnailUrl"
+      placeholder="Paste image URL (optional)"
+    />
+
+    <label>Total Duration (in minutes)</label>
+    <input
+      type="number"
+      formControlName="totalDuration"
+      placeholder="e.g. 120"
+    />
+
+    <label>Course Access Validity</label>
+    <select formControlName="validityInMonths">
+      <option *ngFor="let option of validityOptions" [value]="option.value">
+        {{ option.label }}
+      </option>
+    </select>
+
+    <small class="hint">
+      This decides how long a student can access the course after purchase.
+    </small>
+
+    <div class="form-actions">
+      <button class="secondary-btn" type="button" (click)="goBack()">Cancel</button>
+
+      <button type="submit" class="primary-btn" [disabled]="form.invalid || isSubmitting()">
+        {{
+          isSubmitting()
+            ? (isEditMode() ? 'Updating...' : 'Saving...')
+            : (isEditMode() ? 'Update Draft' : 'Save Draft')
+        }}
+      </button>
+    </div>
+
+    <p class="success" *ngIf="successMessage()">{{ successMessage() }}</p>
+    <p class="error" *ngIf="errorMessage()">{{ errorMessage() }}</p>
+  </form>
+</div>

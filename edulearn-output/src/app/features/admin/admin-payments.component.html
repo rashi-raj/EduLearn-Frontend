@@ -1,0 +1,119 @@
+<div class="payments-page">
+  <div class="page-shell">
+    <div class="page-top">
+      <div>
+        <p class="eyebrow">ADMIN PANEL</p>
+        <h1>Payments</h1>
+        <p class="subtext">Track which student paid for which course and monitor transaction status.</p>
+      </div>
+
+      <button class="back-btn" (click)="goBack()">Back to Dashboard</button>
+    </div>
+
+    <div class="hero-card">
+      <div class="hero-content">
+        <p class="hero-overline">PAYMENT OVERVIEW</p>
+        <h2>Course purchases and collections</h2>
+        <p class="hero-text">
+          View all student course payments, order references, payment status, and amount details in one place.
+        </p>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <p>Total Transactions</p>
+        <h3>{{ payments().length }}</h3>
+        <span>All payment records</span>
+      </div>
+
+      <div class="stat-card">
+        <p>Successful Payments</p>
+        <h3>{{ paidCount() }}</h3>
+        <span>Completed transactions</span>
+      </div>
+
+      <div class="stat-card">
+        <p>Pending Payments</p>
+        <h3>{{ pendingCount() }}</h3>
+        <span>Awaiting completion</span>
+      </div>
+
+      <div class="stat-card">
+        <p>Total Revenue</p>
+        <h3>₹{{ totalRevenue() }}</h3>
+        <span>Collected from paid orders</span>
+      </div>
+    </div>
+
+    <div *ngIf="isLoading()" class="state-card">
+      Loading admin payment history...
+    </div>
+
+    <div *ngIf="errorMessage()" class="state-card error">
+      {{ errorMessage() }}
+    </div>
+
+    <div *ngIf="!isLoading() && !errorMessage() && paymentCards().length === 0" class="state-card empty">
+      No payment history found yet.
+    </div>
+
+    <div class="payment-list" *ngIf="paymentCards().length > 0">
+      <article class="payment-card" *ngFor="let payment of paymentCards()">
+        <div class="payment-top">
+          <div>
+            <h3>{{ payment.courseTitle }}</h3>
+            <p class="student-name">{{ payment.studentName }}</p>
+            <p class="student-email">{{ payment.studentEmail }}</p>
+          </div>
+
+          <span class="status-chip" [class.success]="payment.paymentStatus === 'SUCCESS' || payment.paymentStatus === 'PAID'">
+            {{ payment.paymentStatus }}
+          </span>
+        </div>
+
+        <div class="payment-grid">
+          <div class="meta-box">
+            <span class="meta-label">Amount</span>
+            <strong>₹{{ payment.amount }}</strong>
+          </div>
+
+          <div class="meta-box">
+            <span class="meta-label">Currency</span>
+            <strong>{{ payment.currency }}</strong>
+          </div>
+
+          <div class="meta-box">
+            <span class="meta-label">Method</span>
+            <strong>{{ payment.paymentMethod }}</strong>
+          </div>
+
+          <div class="meta-box">
+            <span class="meta-label">Created</span>
+            <strong>{{ payment.createdAt }}</strong>
+          </div>
+
+          <div class="meta-box">
+            <span class="meta-label">Paid At</span>
+            <strong>{{ payment.paidAt }}</strong>
+          </div>
+
+          <div class="meta-box">
+            <span class="meta-label">Receipt</span>
+            <strong>{{ payment.receipt }}</strong>
+          </div>
+
+          <div class="meta-box">
+            <span class="meta-label">Payment ID</span>
+            <strong>{{ payment.razorpayPaymentId }}</strong>
+          </div>
+
+          <div class="meta-box">
+            <span class="meta-label">Order ID</span>
+            <strong>{{ payment.razorpayOrderId }}</strong>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,79 @@
+<div class="page-shell">
+  <div class="page-top">
+    <div>
+      <p class="eyebrow">ADMIN PANEL</p>
+      <h1>Course Approvals</h1>
+      <p class="subtext">Review submitted courses and track approved or rejected history.</p>
+    </div>
+    <button class="secondary-btn" (click)="goBack()">Back to Dashboard</button>
+  </div>
+
+  <div class="tab-row">
+    <button class="tab-btn" [class.active]="activeTab() === 'PENDING_APPROVAL'" (click)="setTab('PENDING_APPROVAL')">
+      Pending ({{ pendingCourses().length }})
+    </button>
+    <button class="tab-btn" [class.active]="activeTab() === 'PUBLISHED'" (click)="setTab('PUBLISHED')">
+      Approved ({{ approvedCourses().length }})
+    </button>
+    <button class="tab-btn" [class.active]="activeTab() === 'REJECTED'" (click)="setTab('REJECTED')">
+      Rejected ({{ rejectedCourses().length }})
+    </button>
+  </div>
+
+  <div class="message success" *ngIf="successMessage()">
+    {{ successMessage() }}
+  </div>
+
+  <div class="message error" *ngIf="errorMessage()">
+    {{ errorMessage() }}
+  </div>
+
+  <div class="state-card" *ngIf="isLoading()">
+    Loading course approvals...
+  </div>
+
+  <div class="state-card" *ngIf="!isLoading() && displayedCourseCards().length === 0 && !errorMessage()">
+    No courses found for this status.
+  </div>
+
+  <div class="approval-grid" *ngIf="!isLoading() && displayedCourseCards().length > 0">
+    <div class="approval-card" *ngFor="let course of displayedCourseCards()">
+      <div class="card-top">
+        <div>
+          <span class="course-tag">{{ course.category }}</span>
+          <h3>{{ course.title }}</h3>
+          <p class="description">{{ course.description }}</p>
+        </div>
+
+        <span class="status-chip">{{ course.status }}</span>
+      </div>
+
+      <div class="meta-grid">
+        <p><strong>Level:</strong> {{ course.level }}</p>
+        <p><strong>Language:</strong> {{ course.language }}</p>
+        <p><strong>Price:</strong> ₹{{ course.price }}</p>
+        <p><strong>Duration:</strong> {{ formatDuration(course.totalDuration) }}</p>
+        <p><strong>Instructor ID:</strong> {{ course.instructorId }}</p>
+        <p><strong>Created On:</strong> {{ formatDate(course.createdAt) }}</p>
+      </div>
+
+      <div class="actions" *ngIf="activeTab() === 'PENDING_APPROVAL'">
+        <button
+          class="approve-btn"
+          (click)="approveCourse(course.courseId)"
+          [disabled]="actionLoadingCourseId() === course.courseId"
+        >
+          {{ actionLoadingCourseId() === course.courseId ? 'Processing...' : 'Approve & Publish' }}
+        </button>
+
+        <button
+          class="reject-btn"
+          (click)="rejectCourse(course.courseId)"
+          [disabled]="actionLoadingCourseId() === course.courseId"
+        >
+          Reject
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

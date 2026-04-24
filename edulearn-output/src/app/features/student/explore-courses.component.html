@@ -1,0 +1,82 @@
+<div class="explore-page">
+  <div class="page-shell">
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">STUDENT SPACE</p>
+        <h1>Explore Courses</h1>
+        <p class="subtitle">
+          Browse published courses and enroll to start learning.
+        </p>
+      </div>
+
+      <button class="back-btn" (click)="goBack()">Back to My Courses</button>
+    </header>
+
+    <section class="state-card" *ngIf="isLoading()">
+      <h3>Loading courses...</h3>
+      <p>Please wait while we fetch available courses.</p>
+    </section>
+
+    <section class="state-card error" *ngIf="errorMessage() && !isLoading()">
+      <h3>Could not load courses</h3>
+      <p>{{ errorMessage() }}</p>
+    </section>
+
+    <section *ngIf="!isLoading() && !errorMessage()" class="courses-section">
+      <div class="section-head">
+        <h2>Available Courses</h2>
+        <span>{{ courseCards().length }} found</span>
+      </div>
+
+      <div class="course-grid">
+        <article class="course-card" *ngFor="let course of courseCards()">
+          <div class="thumb-wrap" *ngIf="course.thumbnailUrl">
+            <img [src]="course.thumbnailUrl" [alt]="course.title" class="course-thumb" />
+          </div>
+
+          <div class="course-top">
+            <div>
+              <span class="course-tag">{{ course.category }}</span>
+              <h3>{{ course.title }}</h3>
+            </div>
+            <span class="price-chip">
+              {{ course.price > 0 ? ('₹' + course.price) : 'Free' }}
+            </span>
+          </div>
+
+          <p class="course-description">
+            {{ course.description }}
+          </p>
+
+          <div class="course-meta">
+            <span>{{ course.level }}</span>
+            <span>{{ course.language }}</span>
+          </div>
+
+          <div class="card-actions">
+            <button
+              class="primary-btn"
+              *ngIf="!course.isEnrolled"
+              (click)="enroll(course.courseId)">
+              Enroll Now
+            </button>
+
+            <button
+              class="secondary-btn"
+              *ngIf="course.isEnrolled"
+              (click)="openCourse(course.courseId)">
+              Open Course
+            </button>
+
+            <button
+              class="secondary-btn"
+              *ngIf="!course.isEnrolled"
+              (click)="openCourse(course.courseId)">
+              View Course
+            </button>
+          </div>
+        </article>
+      </div>
+    </section>
+  </div>
+</div>

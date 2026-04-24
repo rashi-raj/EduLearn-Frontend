@@ -1,0 +1,77 @@
+<div class="page-shell">
+  <div class="page-top">
+    <div>
+      <p class="eyebrow">INSTRUCTOR SPACE</p>
+      <h1>Learners</h1>
+      <p class="subtext">Track learners enrolled in your courses and monitor their progress.</p>
+    </div>
+    <button class="secondary-btn" (click)="goBack()">Back to Dashboard</button>
+  </div>
+
+  <div class="summary-strip" *ngIf="!isLoading() && !errorMessage()">
+    <div class="summary-card">
+      <span>Total Learner Records</span>
+      <strong>{{ learners().length }}</strong>
+    </div>
+  </div>
+
+  <div class="state-card" *ngIf="isLoading()">
+    Loading learners...
+  </div>
+
+  <div class="state-card error" *ngIf="errorMessage() && !isLoading()">
+    {{ errorMessage() }}
+  </div>
+
+  <div class="empty-card" *ngIf="!isLoading() && !errorMessage() && learners().length === 0">
+    <div class="empty-icon">👥</div>
+    <h3>No learners yet</h3>
+    <p>No student is enrolled in your courses right now.</p>
+  </div>
+
+  <div class="learners-grid" *ngIf="!isLoading() && !errorMessage() && learners().length > 0">
+    <article class="learner-card" *ngFor="let learner of learners()">
+      <div class="learner-top">
+        <div class="avatar-circle">
+          {{ learner.name.charAt(0) | uppercase }}
+        </div>
+
+        <div class="learner-head">
+          <h3>{{ learner.name }}</h3>
+          <p class="student-id">Student ID: {{ learner.studentId }}</p>
+        </div>
+      </div>
+
+      <div class="meta-grid">
+        <div class="meta-box">
+          <span class="meta-label">Course</span>
+          <strong>{{ learner.courseTitle }}</strong>
+        </div>
+
+        <div class="meta-box">
+          <span class="meta-label">Category</span>
+          <strong>{{ learner.courseCategory }}</strong>
+        </div>
+
+        <div class="meta-box">
+          <span class="meta-label">Progress</span>
+          <strong>{{ learner.progress }}</strong>
+        </div>
+      </div>
+
+      <div class="progress-wrap">
+        <div class="progress-head">
+          <span>Progress</span>
+          <strong>{{ learner.progress }}</strong>
+        </div>
+
+        <div class="progress-bar">
+          <div
+            class="progress-fill"
+            [style.width]="learner.progress">
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+</div>

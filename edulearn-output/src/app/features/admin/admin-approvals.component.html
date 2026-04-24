@@ -1,0 +1,89 @@
+<div class="admin-approvals-page">
+  <div class="page-shell">
+    <div class="page-head">
+      <div>
+        <p class="eyebrow">ADMIN PANEL</p>
+        <h1>Instructor Approvals</h1>
+        <p class="subtitle">
+          Review instructor requests and track pending, approved, and rejected statuses.
+        </p>
+      </div>
+
+      <button class="back-btn" (click)="goBack()">Back to Dashboard</button>
+    </div>
+
+    <div class="tab-row">
+      <button class="tab-btn" [class.active]="activeTab() === 'PENDING'" (click)="setTab('PENDING')">
+        Pending ({{ pendingInstructors().length }})
+      </button>
+      <button class="tab-btn" [class.active]="activeTab() === 'APPROVED'" (click)="setTab('APPROVED')">
+        Approved ({{ approvedInstructors().length }})
+      </button>
+      <button class="tab-btn" [class.active]="activeTab() === 'REJECTED'" (click)="setTab('REJECTED')">
+        Rejected ({{ rejectedInstructors().length }})
+      </button>
+    </div>
+
+    <div class="message success" *ngIf="successMessage()">
+      {{ successMessage() }}
+    </div>
+
+    <div class="message error" *ngIf="errorMessage()">
+      {{ errorMessage() }}
+    </div>
+
+    <div class="state-card" *ngIf="isLoading()">
+      Loading instructor approvals...
+    </div>
+
+    <div class="state-card" *ngIf="!isLoading() && displayedUsers().length === 0">
+      No instructor records found for {{ activeTab().toLowerCase() }} status.
+    </div>
+
+    <div class="approval-grid" *ngIf="!isLoading() && displayedUsers().length > 0">
+      <div class="approval-card" *ngFor="let user of displayedUsers()">
+        <div class="card-top">
+          <div>
+            <h3>{{ user.fullName }}</h3>
+            <p>{{ user.email }}</p>
+          </div>
+
+          <span
+            class="status-chip"
+            [ngClass]="{
+              'pending': user.approvalStatus === 'PENDING',
+              'approved': user.approvalStatus === 'APPROVED',
+              'rejected': user.approvalStatus === 'REJECTED'
+            }"
+          >
+            {{ user.approvalStatus }}
+          </span>
+        </div>
+
+        <div class="meta">
+          <span><strong>Role:</strong> {{ user.role }}</span>
+          <span><strong>Provider:</strong> {{ user.provider || 'LOCAL' }}</span>
+          <span *ngIf="user.mobile"><strong>Mobile:</strong> {{ user.mobile }}</span>
+        </div>
+
+        <div class="actions" *ngIf="user.approvalStatus === 'PENDING'">
+          <button
+            class="approve-btn"
+            (click)="approve(user.userId)"
+            [disabled]="actionLoadingUserId() === user.userId"
+          >
+            {{ actionLoadingUserId() === user.userId ? 'Processing...' : 'Approve' }}
+          </button>
+
+          <button
+            class="reject-btn"
+            (click)="reject(user.userId)"
+            [disabled]="actionLoadingUserId() === user.userId"
+          >
+            Reject
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

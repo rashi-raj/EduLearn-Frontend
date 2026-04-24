@@ -1,0 +1,113 @@
+<div class="my-courses-page">
+  <div class="page-shell">
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">STUDENT SPACE</p>
+        <h1>My Courses</h1>
+        <p class="subtitle">
+          View your enrolled courses and continue learning from where you left off.
+        </p>
+      </div>
+
+      <button class="back-btn" (click)="goBackToDashboard()">Back to Dashboard</button>
+    </header>
+
+    <section class="summary-card">
+      <div class="summary-copy">
+        <h2>Welcome, {{ userName() }}</h2>
+        <p *ngIf="hasCourses()">
+        You are enrolled in {{ myCourses().length }} course{{ myCourses().length > 1 ? 's' : '' }}.
+        Continue your learning journey below.
+        </p>
+
+        <p *ngIf="!hasCourses() && !isLoading() && !loadError()">
+        You are not enrolled in any courses yet. Start exploring and begin learning.
+        </p>
+
+        <p *ngIf="loadError() && !isLoading()">
+        We could not verify your enrollments right now.
+        </p>
+      </div>
+
+      <div class="summary-badge">
+        <span>Total Enrolled</span>
+        <strong>{{ myCourses().length }}</strong>
+      </div>
+    </section>
+
+    <section class="state-card" *ngIf="isLoading()">
+      <h3>Loading your courses...</h3>
+      <p>Please wait while we fetch your enrollments.</p>
+    </section>
+
+    <section class="state-card error" *ngIf="loadError() && !isLoading()">
+      <h3>Could not load courses</h3>
+      <p>{{ loadError() }}</p>
+    </section>
+
+    <section *ngIf="hasCourses() && !isLoading()" class="courses-section">
+      <div class="section-head">
+        <h2>Enrolled Courses</h2>
+        <span>{{ myCourses().length }} found</span>
+      </div>
+
+      <div class="course-grid">
+        <article class="course-card" *ngFor="let course of myCourses()">
+          <div class="course-top">
+            <div>
+              <span class="course-tag">{{ course.category }}</span>
+              <h3>{{ course.title }}</h3>
+            </div>
+            <span class="status-chip">{{ course.status }}</span>
+          </div>
+
+          <p class="course-description" *ngIf="course.description">
+            {{ course.description }}
+          </p>
+
+          <div class="course-meta">
+            <span *ngIf="course.level">{{ course.level }}</span>
+            <span *ngIf="course.language">{{ course.language }}</span>
+            <span *ngIf="course.expiresAt">Expires: {{ course.expiresAt | date:'mediumDate' }}</span>
+          </div>
+
+          <div class="certificate-note" *ngIf="course.certificateIssued">
+            Certificate available for this course.
+          </div>
+
+          <div class="card-actions">
+            <button class="primary-btn" (click)="openCourse(course.courseId)">
+                Go to Learning
+                </button>
+
+                <button class="secondary-btn" (click)="openCourse(course.courseId)">
+                Continue Learning
+                </button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="discover-card" *ngIf="hasCourses() && !isLoading()">
+      <div class="discover-content">
+        <div class="discover-icon">🌐</div>
+        <div>
+          <h3>Discover More Courses</h3>
+          <p>Explore our full catalog and find your next learning adventure.</p>
+        </div>
+      </div>
+      <button class="primary-btn" (click)="browseCourses()">Browse All Courses</button>
+    </section>
+
+    <section *ngIf="!hasCourses() && !isLoading() && !loadError()" class="empty-state">
+      <div class="empty-card">
+        <div class="empty-icon">📚</div>
+        <h2>No enrolled courses</h2>
+        <p>
+          You have not enrolled in any courses yet. Once you enroll, your learning dashboard will appear here.
+        </p>
+        <button class="primary-btn" (click)="browseCourses()">Browse Courses</button>
+      </div>
+    </section>
+  </div>
+</div>

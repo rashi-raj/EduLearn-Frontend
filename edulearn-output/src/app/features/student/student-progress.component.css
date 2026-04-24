@@ -1,0 +1,215 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background: #f6f7fc;
+  color: #142a66;
+}
+
+.progress-page {
+  max-width: 1000px;
+  margin: auto;
+  padding: 28px 24px 40px;
+}
+
+.page-head {
+  margin-bottom: 22px;
+}
+
+.back-btn {
+  border: 0;
+  background: linear-gradient(135deg, #7b3ff2, #e6399b);
+  color: white;
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(123, 63, 242, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.back-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(123, 63, 242, 0.3);
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: #7b3ff2;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.page-title {
+  margin: 0;
+  font-size: 2.2rem;
+  font-weight: 800;
+}
+
+.subtitle {
+  color: #6b7280;
+  margin: 10px 0 0;
+  line-height: 1.6;
+}
+
+.state-card {
+  background: white;
+  border-radius: 18px;
+  padding: 18px 20px;
+  margin-bottom: 18px;
+  border: 1px solid #e7e8f3;
+  box-shadow: 0 16px 36px rgba(41, 45, 80, 0.05);
+}
+
+.state-card.error {
+  color: #d64568;
+  background: #fff1f3;
+  border-color: #f4cad4;
+}
+
+.empty-state {
+  margin-top: 24px;
+  margin-bottom: 22px;
+}
+
+.empty-card {
+  border-radius: 28px;
+  padding: 40px 32px;
+  text-align: center;
+  color: white;
+  background: linear-gradient(135deg, #7b3ff2, #e6399b);
+  box-shadow: 0 28px 60px rgba(123, 63, 242, 0.22);
+}
+
+.empty-eyebrow {
+  margin: 0 0 10px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  opacity: 0.9;
+}
+
+.empty-card h3 {
+  margin: 0 0 14px;
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.empty-card p {
+  max-width: 720px;
+  margin: 0 auto 22px;
+  line-height: 1.7;
+  opacity: 0.95;
+}
+
+.empty-btn {
+  border: none;
+  background: white;
+  color: #7b3ff2;
+  padding: 12px 22px;
+  border-radius: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+  transition: 0.25s ease;
+}
+
+.empty-btn:hover {
+  transform: translateY(-2px);
+}
+
+.course-card {
+  background: white;
+  border-radius: 20px;
+  padding: 22px;
+  margin-bottom: 18px;
+  border: 1px solid #e7e8f3;
+  box-shadow: 0 16px 36px rgba(41, 45, 80, 0.05);
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.tag {
+  background: rgba(123, 63, 242, 0.1);
+  color: #6d28d9;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.status {
+  background: #fde2e8;
+  color: #e11d48;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.status.complete {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.course-card h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #142a66;
+}
+
+.progress-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+  font-size: 0.95rem;
+}
+
+.progress-bar {
+  height: 10px;
+  background: #ececf7;
+  border-radius: 999px;
+  margin: 10px 0;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #7c3aed, #ec4899);
+  border-radius: 999px;
+}
+
+.lesson-count {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .progress-page {
+    padding: 18px 16px 30px;
+  }
+
+  .page-title {
+    font-size: 1.9rem;
+  }
+
+  .empty-card {
+    padding: 30px 20px;
+  }
+
+  .empty-card h3 {
+    font-size: 1.6rem;
+  }
+
+  .card-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

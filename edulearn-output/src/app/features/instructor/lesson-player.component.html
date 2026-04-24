@@ -1,0 +1,23 @@
+<div class="player-shell">
+  <div class="player-top">
+    <button class="secondary-btn" (click)="goBack()">← Back to Course</button>
+    <button class="primary-btn" (click)="openOnYoutubeAndComplete()">
+      Open on YouTube
+    </button>
+  </div>
+
+  <div class="video-container">
+    <div id="youtube-player"></div>
+  </div>
+
+  <div class="status-bar" *ngIf="statusMessage()">
+    <span [class.saving]="isSaving()" [class.done]="!isSaving() && statusMessage()">
+      {{ statusMessage() }}
+    </span>
+  </div>
+
+  <p class="helper-text">
+    Lesson progress is saved automatically when the video finishes.<br>
+    If the video does not play here, use <strong>Open on YouTube</strong> — your progress will still be recorded.
+  </p>
+</div>

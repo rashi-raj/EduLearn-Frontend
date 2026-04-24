@@ -1,0 +1,68 @@
+<div class="progress-page">
+  <div class="page-head" style="display: flex; justify-content: space-between; align-items: flex-start;">
+    <div>
+      <p class="eyebrow">STUDENT SPACE</p>
+      <h2 class="page-title">Progress</h2>
+      <p class="subtitle">
+        Track your learning progress, completed lessons, and study consistency.
+      </p>
+    </div>
+    <button class="back-btn" (click)="goBack()">Back to Dashboard</button>
+  </div>
+
+  <div *ngIf="isLoading()" class="state-card">
+    Loading your progress...
+  </div>
+
+  <div *ngIf="errorMessage()" class="state-card error">
+    {{ errorMessage() }}
+  </div>
+
+  <div
+    class="empty-state"
+    *ngIf="!isLoading() && !errorMessage() && progressList().length === 0"
+  >
+    <div class="empty-card">
+      <p class="empty-eyebrow">START YOUR LEARNING JOURNEY</p>
+      <h3>No progress to show yet</h3>
+      <p>
+        You have not enrolled in any courses yet. Explore published courses,
+        start learning, and your progress dashboard will begin tracking everything here.
+      </p>
+
+      <button class="empty-btn" (click)="exploreCourses()">
+        Explore Courses
+      </button>
+    </div>
+  </div>
+
+  <div
+    class="course-card"
+    *ngFor="let course of progressList()"
+  >
+    <div class="card-top">
+      <span class="tag">{{ course.category }}</span>
+      <span class="status" [class.complete]="course.progressPercent === 100">
+        {{ course.progressPercent === 100 ? 'Completed' : 'In Progress' }}
+      </span>
+    </div>
+
+    <h3>{{ course.courseTitle }}</h3>
+
+    <div class="progress-row">
+      <span>Progress</span>
+      <strong>{{ course.progressPercent }}%</strong>
+    </div>
+
+    <div class="progress-bar">
+      <div
+        class="progress-fill"
+        [style.width.%]="course.progressPercent">
+      </div>
+    </div>
+
+    <p class="lesson-count">
+      {{ course.completedLessons }} / {{ course.totalLessons }} lessons completed
+    </p>
+  </div>
+</div>

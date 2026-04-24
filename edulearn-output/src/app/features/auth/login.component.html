@@ -1,0 +1,96 @@
+<div class="auth-page">
+  <div class="auth-shell">
+    <section class="brand-panel">
+      <div class="brand-content">
+        <h1>Learn smarter, stay consistent, and progress in one place.</h1>
+      </div>
+
+      <div class="brand-illustration-wrap">
+        <img src="assets/edulearn-pana.png" alt="EduLearn illustration" class="brand-illustration" />
+      </div>
+    </section>
+
+    <section class="form-panel">
+      <div class="form-card">
+        <div class="form-header">
+          <div class="brand-top">
+            <div class="brand-logo-card">
+              <img src="assets/edulearn-logo.png" alt="EduLearn visual" class="brand-logo" />
+            </div>
+          </div>
+          <h2>Login</h2>
+          <p>Enter your email and password to continue learning.</p>
+        </div>
+
+        <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+          <div class="field-group">
+            <label>Email</label>
+            <input type="email" formControlName="email" placeholder="Enter your email" />
+            <small class="error" *ngIf="emailError()">{{ emailError() }}</small>
+          </div>
+
+          <div class="field-group">
+            <label>Password</label>
+            <div class="password-wrap">
+              <input
+                [type]="hidePassword() ? 'password' : 'text'"
+                formControlName="password"
+                placeholder="Enter your password"
+              />
+              <button type="button" class="eye-btn" (click)="togglePassword()">
+                {{ hidePassword() ? 'Show' : 'Hide' }}
+              </button>
+            </div>
+            <small class="error" *ngIf="passwordError()">{{ passwordError() }}</small>
+          </div>
+
+          <div class="forgot-row">
+            <a routerLink="/forgot-password">Forgot password?</a>
+          </div>
+
+          <button class="primary-btn" type="submit" [disabled]="isSubmitting()">
+            {{ isSubmitting() ? 'Logging in...' : 'Log in' }}
+          </button>
+
+          <p class="success" *ngIf="successMessage()">{{ successMessage() }}</p>
+          <p class="error api-error" *ngIf="apiError()">{{ apiError() }}</p>
+
+          <div class="divider">
+            <span>or continue with</span>
+          </div>
+
+          <button type="button" class="social-btn" (click)="openGoogleRolePopup()">
+            <span class="social-icon">G</span>
+            Continue with Google
+          </button>
+
+          <div class="form-footer">
+            Don’t have an account?
+            <a routerLink="/register">Create account</a>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <div class="popup-backdrop" *ngIf="showGoogleRolePopup()">
+    <div class="popup-card">
+      <h3>Select role for Google login</h3>
+      <p>Choose how you want to continue.</p>
+
+      <div class="popup-actions">
+        <button type="button" class="primary-btn" (click)="continueGoogleLogin('STUDENT')">
+          Continue as Student
+        </button>
+
+        <button type="button" class="secondary-btn" (click)="continueGoogleLogin('INSTRUCTOR')">
+          Continue as Instructor
+        </button>
+      </div>
+
+      <button type="button" class="text-btn" (click)="closeGoogleRolePopup()">
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,100 @@
+<div class="admin-page-shell">
+  <div class="page-top">
+    <div>
+      <p class="eyebrow">ADMIN PANEL</p>
+      <h1>User Management</h1>
+      <p class="subtext">View and monitor student and instructor accounts in one place.</p>
+    </div>
+    <button class="secondary-btn" (click)="goBack()">Back to Dashboard</button>
+  </div>
+
+  <div class="hero-strip">
+    <div class="hero-copy">
+      <p class="hero-overline">PLATFORM OVERVIEW</p>
+      <h2>Users across EduLearn</h2>
+      <p>Track students, instructors, and approval states with a cleaner admin view.</p>
+    </div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <p>Total Users</p>
+      <h3>{{ users().length }}</h3>
+      <span>All registered accounts</span>
+    </div>
+
+    <div class="stat-card">
+      <p>Students</p>
+      <h3>{{ totalStudents() }}</h3>
+      <span>Active learner accounts</span>
+    </div>
+
+    <div class="stat-card">
+      <p>Instructors</p>
+      <h3>{{ totalInstructors() }}</h3>
+      <span>Total instructor accounts</span>
+    </div>
+
+    <div class="stat-card">
+      <p>Pending Instructors</p>
+      <h3>{{ pendingInstructors() }}</h3>
+      <span>Awaiting admin approval</span>
+    </div>
+  </div>
+
+  <div class="state-card" *ngIf="isLoading()">
+    Loading users...
+  </div>
+
+  <div class="state-card error" *ngIf="errorMessage()">
+    {{ errorMessage() }}
+  </div>
+
+  <div class="empty-card" *ngIf="!isLoading() && !errorMessage() && users().length === 0">
+    <h3>No users found</h3>
+    <p>No student or instructor accounts are available right now.</p>
+  </div>
+
+  <div class="user-grid" *ngIf="!isLoading() && !errorMessage() && users().length > 0">
+    <article class="user-card" *ngFor="let user of users()">
+      <div class="user-top">
+        <div class="avatar-circle">
+          {{ user.fullName.charAt(0) || 'U' }}
+        </div>
+
+        <div class="user-head">
+          <h3>{{ user.fullName }}</h3>
+          <p>{{ user.email }}</p>
+        </div>
+
+        <span
+          class="status-chip"
+          [ngClass]="{
+            'approved': user.approvalStatus === 'APPROVED',
+            'pending': user.approvalStatus === 'PENDING',
+            'rejected': user.approvalStatus === 'REJECTED'
+          }"
+        >
+          {{ user.approvalStatus }}
+        </span>
+      </div>
+
+      <div class="meta-grid">
+        <div class="meta-box">
+          <span class="meta-label">Role</span>
+          <strong>{{ user.role }}</strong>
+        </div>
+
+        <div class="meta-box">
+          <span class="meta-label">Provider</span>
+          <strong>{{ user.provider || 'LOCAL' }}</strong>
+        </div>
+
+        <div class="meta-box" *ngIf="user.mobile">
+          <span class="meta-label">Mobile</span>
+          <strong>{{ user.mobile }}</strong>
+        </div>
+      </div>
+    </article>
+  </div>
+</div>

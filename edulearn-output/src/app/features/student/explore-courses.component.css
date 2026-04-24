@@ -1,0 +1,255 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  --bg: #f4f5fb;
+  --border: #e7e8f3;
+  --text: #132968;
+  --muted: #6c789f;
+  --pink: #e6399b;
+  --violet: #7b3ff2;
+  --violet-deep: #6128dd;
+  --shadow: 0 20px 50px rgba(46, 39, 87, 0.08);
+  --hero-gradient: linear-gradient(135deg, #7c3aed 0%, #b14ed0 45%, #e6659a 100%);
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(124, 58, 237, 0.08), transparent 25%),
+    radial-gradient(circle at top right, rgba(230, 101, 154, 0.08), transparent 22%),
+    var(--bg);
+  color: var(--text);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.explore-page {
+  min-height: 100vh;
+  padding: 28px;
+}
+
+.page-shell {
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: flex-start;
+  margin-bottom: 22px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  font-size: 0.8rem;
+  letter-spacing: 0.16em;
+  font-weight: 700;
+  color: var(--violet);
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.05;
+}
+
+.subtitle {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.6;
+  max-width: 720px;
+}
+
+.back-btn,
+.primary-btn,
+.secondary-btn {
+  cursor: pointer;
+  transition: 0.25s ease;
+  font: inherit;
+}
+
+.back-btn {
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  height: 48px;
+  padding: 0 18px;
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  font-weight: 700;
+}
+
+.state-card,
+.course-card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+}
+
+.state-card {
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.state-card.error {
+  border-color: #f1c7d1;
+}
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.section-head h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.section-head span {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.course-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.course-card {
+  padding: 22px;
+}
+
+.thumb-wrap {
+  margin-bottom: 16px;
+}
+
+.course-thumb {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 18px;
+  display: block;
+}
+
+.course-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.course-tag {
+  display: inline-block;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: rgba(123, 63, 242, 0.1);
+  color: var(--violet-deep);
+  font-weight: 700;
+  font-size: 0.82rem;
+  margin-bottom: 10px;
+}
+
+.course-card h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.price-chip {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(230, 57, 155, 0.1);
+  color: var(--pink);
+  font-weight: 700;
+  white-space: nowrap;
+  font-size: 0.82rem;
+}
+
+.course-description {
+  margin: 14px 0 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.course-meta {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.course-meta span {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #f7f7fd;
+  color: var(--muted);
+  font-size: 0.84rem;
+  font-weight: 600;
+}
+
+.card-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+
+.primary-btn {
+  border: 0;
+  color: #fff;
+  font-weight: 700;
+  background: linear-gradient(135deg, #7b3ff2, #e6399b);
+  box-shadow: 0 16px 30px rgba(123, 63, 242, 0.22);
+  min-width: 160px;
+  height: 46px;
+  padding: 0 16px;
+  border-radius: 12px;
+}
+
+.secondary-btn {
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  min-width: 160px;
+  height: 46px;
+  padding: 0 16px;
+  border-radius: 12px;
+}
+
+@media (max-width: 960px) {
+  .course-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 640px) {
+  .explore-page {
+    padding: 16px;
+  }
+
+  .card-actions {
+    flex-direction: column;
+  }
+
+  .primary-btn,
+  .secondary-btn,
+  .back-btn {
+    width: 100%;
+  }
+
+  .course-top,
+  .section-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

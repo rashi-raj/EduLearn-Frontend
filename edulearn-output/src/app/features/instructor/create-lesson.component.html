@@ -1,0 +1,102 @@
+<div class="page-shell">
+  <div class="page-top">
+    <div>
+      <p class="eyebrow">INSTRUCTOR SPACE</p>
+      <h1>Create Lesson</h1>
+      <p class="subtext">Add a lesson and attach a YouTube video URL.</p>
+    </div>
+    <button class="secondary-btn" type="button" (click)="goBack()">Back to Lessons</button>
+  </div>
+
+  <div class="state-card" *ngIf="isLoadingCourses()">
+    Loading your courses...
+  </div>
+
+  <div class="state-card error" *ngIf="errorMessage() && !isLoadingCourses()">
+    {{ errorMessage() }}
+  </div>
+
+  <form class="form-card" [formGroup]="form" (ngSubmit)="submit()" *ngIf="!isLoadingCourses()">
+    <div class="field-group">
+      <label>Select Course</label>
+      <div class="select-wrap">
+        <select formControlName="courseId">
+          <option value="" disabled>Select course</option>
+          <option *ngFor="let course of courses()" [value]="course.courseId">
+            {{ course.title }}
+          </option>
+        </select>
+      </div>
+      <small class="error" *ngIf="courseError()">{{ courseError() }}</small>
+    </div>
+
+    <div class="field-group">
+      <label>Lesson Title</label>
+      <input type="text" formControlName="title" placeholder="Enter lesson title" />
+      <small class="error" *ngIf="titleError()">{{ titleError() }}</small>
+    </div>
+
+    <div class="field-group">
+      <label>Content Type</label>
+      <input type="text" formControlName="contentType" readonly />
+    </div>
+
+    <div class="field-group">
+      <label>YouTube Video URL</label>
+      <input
+        type="text"
+        formControlName="contentUrl"
+        placeholder="Paste YouTube URL, e.g. https://www.youtube.com/watch?v=Hq3m4i58f6k"
+      />
+      <small class="hint">
+        Sample video:
+        <span class="sample-link">https://www.youtube.com/watch?v=Hq3m4i58f6k</span>
+      </small>
+      <button class="mini-btn" type="button" (click)="fillSampleVideo()">Use Sample URL</button>
+      <small class="error" *ngIf="contentUrlError()">{{ contentUrlError() }}</small>
+    </div>
+
+    <div class="field-group">
+      <label>Description</label>
+      <textarea formControlName="description" rows="4" placeholder="Enter lesson description"></textarea>
+    </div>
+
+    <div class="field-row">
+      <div class="field-group">
+        <label>Duration (minutes)</label>
+        <input type="number" formControlName="durationMinutes" min="0" placeholder="e.g. 20" />
+        <small class="error" *ngIf="durationError()">{{ durationError() }}</small>
+      </div>
+
+      <div class="field-group">
+        <label>Lesson Order</label>
+        <input type="number" formControlName="orderIndex" min="0" placeholder="e.g. 0" />
+        <small class="error" *ngIf="orderError()">{{ orderError() }}</small>
+      </div>
+    </div>
+
+    <label class="checkbox-row">
+      <input type="checkbox" formControlName="isPreview" />
+      <span>Make this lesson available as preview</span>
+    </label>
+
+    <div class="thumbnail-preview-box">
+      <p class="thumb-title">Auto Thumbnail Preview</p>
+      <img
+        src="https://img.youtube.com/vi/Hq3m4i58f6k/0.jpg"
+        alt="Sample YouTube thumbnail"
+        class="thumbnail-preview"
+      />
+      <small class="hint">
+        Sample thumbnail:
+        <span class="sample-link">https://img.youtube.com/vi/Hq3m4i58f6k/0.jpg</span>
+      </small>
+    </div>
+
+    <button class="primary-btn" type="submit" [disabled]="isSubmitting() || form.invalid">
+      {{ isSubmitting() ? 'Creating Lesson...' : 'Create Lesson' }}
+    </button>
+
+    <p class="success" *ngIf="successMessage()">{{ successMessage() }}</p>
+  </form>
+</div>

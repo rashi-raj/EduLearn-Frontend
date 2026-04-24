@@ -1,0 +1,82 @@
+<div class="payments-page">
+  <div class="page-shell">
+    <div class="page-top">
+      <button class="back-btn" (click)="goBack()">Back to Dashboard</button>
+    </div>
+
+    <div class="hero-card">
+      <div class="hero-content">
+        <p class="hero-overline">STUDENT SPACE</p>
+        <h1>Payments</h1>
+        <p class="hero-text">
+          View your payment history for purchased courses and related transactions.
+        </p>
+      </div>
+    </div>
+
+    <div *ngIf="isLoading()" class="state-card">
+      Loading payment history...
+    </div>
+
+    <div *ngIf="errorMessage()" class="state-card error">
+      {{ errorMessage() }}
+    </div>
+
+    <div *ngIf="!isLoading() && !errorMessage() && paymentCards().length === 0" class="state-card empty">
+      No payment history found yet.
+    </div>
+
+    <div class="payment-list" *ngIf="paymentCards().length > 0">
+      <article class="payment-card" *ngFor="let payment of paymentCards()">
+        <div class="payment-top">
+          <div>
+            <h3>{{ payment.courseTitle }}</h3>
+            <p class="payment-date">Created: {{ payment.createdAt }}</p>
+            <p class="payment-date">Paid: {{ payment.paidAt }}</p>
+          </div>
+
+          <span class="status-chip" [class.success]="payment.paymentStatus === 'SUCCESS' || payment.paymentStatus === 'PAID'">
+            {{ payment.paymentStatus }}
+          </span>
+        </div>
+
+        <div class="payment-grid">
+          <div class="meta-box">
+            <span class="meta-label">Amount</span>
+            <strong>₹{{ payment.amount }}</strong>
+          </div>
+
+          <div class="meta-box">
+            <span class="meta-label">Currency</span>
+            <strong>{{ payment.currency }}</strong>
+          </div>
+
+          <div class="meta-box">
+            <span class="meta-label">Method</span>
+            <strong>{{ payment.paymentMethod }}</strong>
+          </div>
+
+          <div class="meta-box">
+            <span class="meta-label">Receipt</span>
+            <strong>{{ payment.receipt }}</strong>
+          </div>
+
+          <div class="meta-box">
+            <span class="meta-label">Payment ID</span>
+            <strong>{{ payment.razorpayPaymentId }}</strong>
+          </div>
+
+          <div class="meta-box">
+            <span class="meta-label">Order ID</span>
+            <strong>{{ payment.razorpayOrderId }}</strong>
+          </div>
+
+          <div class="meta-box">
+            <span class="meta-label">Transaction ID</span>
+            <strong>{{ payment.paymentId }}</strong>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</div>

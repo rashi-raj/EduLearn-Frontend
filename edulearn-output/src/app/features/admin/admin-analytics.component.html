@@ -1,0 +1,17 @@
+<div class="page-shell">
+  <div class="page-top">
+    <div>
+      <p class="eyebrow">ADMIN PANEL</p>
+      <h1>Analytics</h1>
+      <p class="subtext">Track learners, revenue, platform growth, and approvals.</p>
+    </div>
+    <button class="secondary-btn" (click)="goBack()">Back to Dashboard</button>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card" *ngFor="let item of stats()">
+      <p>{{ item.title }}</p>
+      <h3>{{ item.value }}</h3>
+    </div>
+  </div>
+</div>

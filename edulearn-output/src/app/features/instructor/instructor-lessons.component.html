@@ -1,0 +1,60 @@
+<div class="page-shell">
+  <div class="page-top">
+    <div>
+      <p class="eyebrow">INSTRUCTOR SPACE</p>
+      <h1>Lessons</h1>
+      <p class="subtext">Add, manage, and organize lesson content for your courses.</p>
+    </div>
+    <div class="top-actions">
+      <button class="secondary-btn" (click)="goBack()">Back to Dashboard</button>
+      <button class="primary-btn" (click)="addLesson()">Add Lesson</button>
+    </div>
+  </div>
+
+  <div class="state-card" *ngIf="isLoading()">
+    Loading your lessons...
+  </div>
+
+  <div class="state-card error" *ngIf="errorMessage() && !isLoading()">
+    {{ errorMessage() }}
+  </div>
+
+  <div class="empty-card" *ngIf="!isLoading() && !errorMessage() && courseLessonCards().length === 0">
+    <h3>No courses found</h3>
+    <p>Create courses first, then their lessons will appear here.</p>
+  </div>
+
+  <div class="course-grid" *ngIf="!isLoading() && !errorMessage() && courseLessonCards().length > 0">
+    <div class="course-card" *ngFor="let course of courseLessonCards()">
+      <div class="course-top">
+        <div>
+          <span class="course-tag">{{ course.category }}</span>
+          <h3>{{ course.courseTitle }}</h3>
+        </div>
+      </div>
+
+      <div class="empty-lessons" *ngIf="course.lessons.length === 0">
+        No lessons added yet for this course.
+      </div>
+
+      <div class="lesson-list" *ngIf="course.lessons.length > 0">
+        <div class="lesson-item" *ngFor="let lesson of course.lessons">
+          <div class="thumbnail clickable" (click)="openLessonVideo(lesson.contentUrl)">
+            <img [src]="getThumbnail(lesson.contentUrl)" [alt]="lesson.title" />
+            <button class="play-btn" type="button">▶</button>
+          </div>
+
+          <div class="lesson-info clickable" (click)="openLessonVideo(lesson.contentUrl)">
+            <div class="lesson-head">
+              <strong>{{ lesson.order }}. {{ lesson.title }}</strong>
+              <span class="preview-chip" *ngIf="lesson.isPreview">Preview</span>
+            </div>
+
+            <p>{{ lesson.description }}</p>
+            <span class="duration">{{ lesson.duration }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+{
+  "app": {
+    "name": "EduLearn",
+    "tagline": "Learn. Grow. Succeed."
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "forgotPassword": "Forgot Password",
+    "resetPassword": "Reset Password"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome back"
+  },
+  "courses": {
+    "title": "Courses",
+    "create": "Create Course",
+    "explore": "Explore Courses"
+  },
+  "lessons": {
+    "title": "Lessons",
+    "create": "Create Lesson"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "comingSoon": "Coming Soon"
+  }
+}

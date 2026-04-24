@@ -1,0 +1,194 @@
+.admin-approvals-page {
+  padding: 32px;
+}
+
+.page-shell {
+  width: 100%;
+}
+
+.page-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: #7c3aed;
+}
+
+.page-head h1 {
+  margin: 0;
+  font-size: 3rem;
+  line-height: 1.05;
+  color: #0f2a6b;
+}
+
+.subtitle {
+  margin: 14px 0 0;
+  color: #6b7aa5;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.back-btn {
+  border: 1px solid #d8dff0;
+  background: #fff;
+  color: #0f2a6b;
+  border-radius: 16px;
+  padding: 14px 22px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.tab-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  border: 1px solid #d8dff0;
+  background: #fff;
+  color: #0f2a6b;
+  border-radius: 999px;
+  padding: 10px 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.tab-btn.active {
+  background: linear-gradient(135deg, #7c3aed, #ec4899);
+  color: #fff;
+  border-color: transparent;
+}
+
+.message {
+  margin-bottom: 16px;
+  padding: 14px 18px;
+  border-radius: 16px;
+  font-weight: 600;
+}
+
+.message.success {
+  background: #eefbf3;
+  color: #157347;
+}
+
+.message.error {
+  background: #fff1f3;
+  color: #c24151;
+}
+
+.state-card {
+  background: #fff;
+  border: 1px solid #e6ebf5;
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 10px 26px rgba(15, 42, 107, 0.04);
+}
+
+.approval-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.approval-card {
+  background: #fff;
+  border: 1px solid #e6ebf5;
+  border-radius: 24px;
+  padding: 22px;
+  box-shadow: 0 10px 26px rgba(15, 42, 107, 0.04);
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.card-top h3 {
+  margin: 0;
+  color: #0f2a6b;
+}
+
+.card-top p {
+  margin: 6px 0 0;
+  color: #6b7aa5;
+}
+
+.status-chip {
+  align-self: flex-start;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.82rem;
+}
+
+.status-chip.pending {
+  background: #fff7dd;
+  color: #9a6700;
+}
+
+.status-chip.approved {
+  background: #eafbf2;
+  color: #157347;
+}
+
+.status-chip.rejected {
+  background: #fff1f3;
+  color: #c24151;
+}
+
+.meta {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 18px;
+  color: #4c5d87;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+}
+
+.approve-btn,
+.reject-btn {
+  border: none;
+  border-radius: 14px;
+  padding: 12px 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.approve-btn {
+  background: linear-gradient(135deg, #7c3aed, #ec4899);
+  color: #fff;
+}
+
+.reject-btn {
+  background: #fff1f3;
+  color: #c24151;
+}
+
+@media (max-width: 900px) {
+  .approval-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-head {
+    flex-direction: column;
+  }
+
+  .page-head h1 {
+    font-size: 2.2rem;
+  }
+}

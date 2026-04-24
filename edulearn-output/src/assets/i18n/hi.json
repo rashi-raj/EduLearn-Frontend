@@ -1,0 +1,35 @@
+{
+  "app": {
+    "name": "EduLearn",
+    "tagline": "सीखें। बढ़ें। सफल हों।"
+  },
+  "auth": {
+    "login": "लॉगिन",
+    "register": "रजिस्टर",
+    "logout": "लॉगआउट",
+    "forgotPassword": "पासवर्ड भूल गए",
+    "resetPassword": "पासवर्ड रीसेट"
+  },
+  "dashboard": {
+    "title": "डैशबोर्ड",
+    "welcome": "वापस स्वागत है"
+  },
+  "courses": {
+    "title": "कोर्स",
+    "create": "कोर्स बनाएं",
+    "explore": "कोर्स खोजें"
+  },
+  "lessons": {
+    "title": "लेसन",
+    "create": "लेसन बनाएं"
+  },
+  "common": {
+    "save": "सहेजें",
+    "cancel": "रद्द करें",
+    "delete": "हटाएं",
+    "edit": "संपादित करें",
+    "loading": "लोड हो रहा है...",
+    "error": "कुछ गलत हो गया",
+    "comingSoon": "जल्द आ रहा है"
+  }
+}

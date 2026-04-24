@@ -1,0 +1,44 @@
+<div class="page-shell">
+  <div class="page-top">
+    <div>
+      <p class="eyebrow">STUDENT SPACE</p>
+      <h1>Certificates</h1>
+      <p class="subtext">View and download certificates for completed courses.</p>
+    </div>
+    <button class="back-btn" (click)="goBack()">Back to Dashboard</button>
+  </div>
+
+  <div class="state-card" *ngIf="isLoading()">
+    Loading certificates...
+  </div>
+
+  <div class="state-card error" *ngIf="errorMessage() && !isLoading()">
+    {{ errorMessage() }}
+  </div>
+
+  <div class="empty-card" *ngIf="!isLoading() && !errorMessage() && certificateCards().length === 0">
+    <h3>No certificates available yet</h3>
+    <p>When you complete eligible courses, your certificates will appear here.</p>
+    <button class="primary-btn" (click)="goToCourses()">Go to My Courses</button>
+  </div>
+
+  <div class="certificate-grid" *ngIf="!isLoading() && !errorMessage() && certificateCards().length > 0">
+    <div class="certificate-card" *ngFor="let item of certificateCards()">
+      <div class="card-top">
+        <div>
+          <span class="course-tag">{{ item.category }}</span>
+          <h3>{{ item.title }}</h3>
+        </div>
+        <span class="status-chip">Issued</span>
+      </div>
+
+      <p class="issued-date">Issued At: {{ item.issuedAt }}</p>
+
+      <div class="card-actions">
+        <button class="primary-btn" (click)="openCertificate(item.certificateUrl)">
+          Open Certificate
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

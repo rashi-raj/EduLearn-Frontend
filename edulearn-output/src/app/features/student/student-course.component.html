@@ -1,0 +1,137 @@
+<div class="course-page">
+  <div class="page-top" style="display: flex; justify-content: flex-end; padding: 20px 20px 0;">
+    <button class="back-btn" (click)="goBack()">Back to Dashboard</button>
+  </div>
+  <div class="page-shell" *ngIf="!isLoading(); else loadingBlock">
+
+    <div class="top-banner" *ngIf="successMessage()">
+      {{ successMessage() }}
+    </div>
+
+    <div class="top-banner error" *ngIf="errorMessage()">
+      {{ errorMessage() }}
+    </div>
+
+    <section class="hero-card" *ngIf="course() as course">
+      <div class="hero-left">
+        <span class="course-tag">{{ course.category }}</span>
+        <h1>{{ course.title }}</h1>
+        <p>{{ course.description }}</p>
+
+        <div class="meta-row">
+          <span>{{ course.level }}</span>
+          <span>{{ course.language }}</span>
+          <span>{{ totalLessons() }} lessons</span>
+          <span>{{ course.price ? ('₹' + course.price) : 'Free' }}</span>
+        </div>
+
+        <div class="expiry-note" *ngIf="isEnrolled() && hasActiveAccess()">
+          Course access is active.
+        </div>
+
+        <div class="expiry-note expired" *ngIf="isEnrolled() && !hasActiveAccess()">
+          Your access to this course has expired.
+        </div>
+
+        <div class="hero-actions">
+          <button class="primary-btn" *ngIf="!isEnrolled()" (click)="enroll()">
+            Enroll Now
+          </button>
+
+          <button class="primary-btn" *ngIf="isEnrolled() && !isPaid()" (click)="purchaseCourse()">
+            Purchase Course
+          </button>
+
+          <button class="primary-btn" *ngIf="isEnrolled() && isPaid() && !hasActiveAccess()" (click)="purchaseCourse()">
+            Renew Access
+          </button>
+
+          <button class="secondary-btn" *ngIf="isEnrolled() && isPaid() && hasActiveAccess()" (click)="openQuizzes()">
+            Open Quizzes
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="progress-section" *ngIf="isEnrolled() && totalLessons() > 0">
+      <div class="progress-header">
+        <span class="progress-label">Your Progress</span>
+        <span class="progress-count">{{ totalCompletedCount() }} / {{ totalLessons() }} lessons &nbsp;·&nbsp; <strong>{{ progressPercent() }}%</strong></span>
+      </div>
+      <div class="progress-bar-track">
+        <div class="progress-bar-fill" [style.width.%]="progressPercent()"></div>
+      </div>
+    </section>
+
+    <section class="lessons-section">
+      <div class="section-head">
+        <h2>Free Preview Lessons</h2>
+        <span>{{ previewLessons().length }}</span>
+      </div>
+
+      <div class="lesson-list">
+        <div class="lesson-item" *ngFor="let lesson of previewLessons()" (click)="openLesson(lesson)">
+          <div class="thumb-col">
+            <img *ngIf="getThumbnail(lesson.contentUrl)" [src]="getThumbnail(lesson.contentUrl)" [alt]="lesson.title" class="lesson-thumb" />
+            <div *ngIf="!getThumbnail(lesson.contentUrl)" class="lesson-thumb placeholder-thumb">🎬</div>
+            <div class="play-overlay">▶</div>
+          </div>
+
+          <div class="lesson-content">
+            <div class="lesson-head">
+              <strong>{{ lesson.orderIndex }}. {{ lesson.title }}</strong>
+
+              <span *ngIf="isCompleted(lesson.lessonId)" class="completed-badge">
+                Completed
+              </span>
+
+              <span class="preview-chip">Preview</span>
+            </div>
+            <p>{{ lesson.description }}</p>
+            <span class="duration">{{ lesson.durationMinutes }} mins</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lessons-section" *ngIf="premiumLessons().length > 0">
+      <div class="section-head">
+        <h2>Premium Lessons</h2>
+        <span>{{ premiumLessons().length }}</span>
+      </div>
+
+      <div class="lesson-list">
+        <div class="lesson-item" *ngFor="let lesson of premiumLessons()" (click)="openLesson(lesson)">
+          <div class="thumb-col">
+            <img *ngIf="getThumbnail(lesson.contentUrl)" [src]="getThumbnail(lesson.contentUrl)" [alt]="lesson.title" class="lesson-thumb" />
+            <div *ngIf="!getThumbnail(lesson.contentUrl)" class="lesson-thumb placeholder-thumb">🎬</div>
+            <div class="play-overlay">{{ isPaid() ? '▶' : '🔒' }}</div>
+          </div>
+
+          <div class="lesson-content">
+            <div class="lesson-head">
+              <strong>{{ lesson.orderIndex }}. {{ lesson.title }}</strong>
+
+              <span *ngIf="lesson.lessonId && isCompleted(lesson.lessonId)" class="completed-badge">
+                Completed
+              </span>
+
+              <span class="lock-chip">
+                {{ isPaid() ? 'Unlocked' : 'Locked' }}
+              </span>
+            </div>
+            <p>{{ lesson.description }}</p>
+            <span class="duration">{{ lesson.durationMinutes }} mins</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <ng-template #loadingBlock>
+    <div class="page-shell">
+      <div class="hero-card">Loading course details...</div>
+    </div>
+  </ng-template>
+</div>

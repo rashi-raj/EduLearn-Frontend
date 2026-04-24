@@ -1,0 +1,36 @@
+<div class="payment-page">
+  <div class="page-shell" *ngIf="!isLoading(); else loadingBlock">
+    <div class="top-banner error" *ngIf="errorMessage()">
+      {{ errorMessage() }}
+    </div>
+
+    <section class="payment-card" *ngIf="course() as course">
+      <span class="course-tag">Course Purchase</span>
+      <h1>{{ course.title }}</h1>
+      <p>{{ course.description }}</p>
+
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="label">Price</span>
+          <strong>₹{{ course.price }}</strong>
+        </div>
+
+        <div class="info-item">
+          <span class="label">Access Validity</span>
+          <strong>{{ getValidityText(course.validityInMonths) }}</strong>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="secondary-btn" (click)="goBack()">Back</button>
+        <button class="primary-btn" (click)="payNow()">Pay with Razorpay</button>
+      </div>
+    </section>
+  </div>
+
+  <ng-template #loadingBlock>
+    <div class="page-shell">
+      <div class="payment-card">Loading payment details...</div>
+    </div>
+  </ng-template>
+</div>

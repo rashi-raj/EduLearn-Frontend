@@ -1,0 +1,120 @@
+<div class="auth-page">
+  <div class="auth-shell">
+    <section class="brand-panel">
+      <div class="brand-content">
+        <h1>Learn smarter, stay consistent, and progress in one place.</h1>
+      </div>
+
+      <div class="brand-illustration-wrap">
+        <img src="assets/edulearn-pana.png" alt="EduLearn illustration" class="brand-illustration" />
+      </div>
+    </section>
+
+    <section class="form-panel">
+      <div class="form-card">
+        <div class="form-header">
+          <div class="brand-top">
+            <div class="brand-logo-card">
+              <img src="assets/edulearn-logo.png" alt="EduLearn visual" class="brand-logo" />
+            </div>
+          </div>
+
+          <h2>Create Account</h2>
+          <p>Enter your details to create your EduLearn account.</p>
+        </div>
+
+        <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+          <div class="field-group">
+            <label>Full Name</label>
+            <input type="text" formControlName="fullName" placeholder="Enter your full name" />
+            <small class="error" *ngIf="fullNameError()">{{ fullNameError() }}</small>
+          </div>
+
+          <div class="field-group">
+            <label>Email</label>
+            <input type="email" formControlName="email" placeholder="Enter your email" />
+            <small class="error" *ngIf="emailError()">{{ emailError() }}</small>
+          </div>
+
+          <div class="field-group">
+            <label>Role</label>
+            <div class="select-wrap">
+              <select formControlName="role">
+                <option value="" disabled>Select role</option>
+                <option value="STUDENT">Student</option>
+                <option value="INSTRUCTOR">Instructor</option>
+              </select>
+            </div>
+            <small class="error" *ngIf="roleError()">{{ roleError() }}</small>
+          </div>
+
+          <div class="field-group">
+            <label>Mobile</label>
+            <input type="text" formControlName="mobile" placeholder="Enter your mobile number" />
+            <small class="error" *ngIf="mobileError()">{{ mobileError() }}</small>
+          </div>
+
+          <div class="field-group">
+            <label>Password</label>
+            <div class="password-wrap">
+              <input
+                [type]="hidePassword() ? 'password' : 'text'"
+                formControlName="password"
+                placeholder="Enter your password"
+              />
+              <button type="button" class="eye-btn" (click)="togglePassword()">
+                {{ hidePassword() ? 'Show' : 'Hide' }}
+              </button>
+            </div>
+            <small class="error" *ngIf="passwordError()">{{ passwordError() }}</small>
+          </div>
+
+          <div class="field-group">
+            <label>Confirm Password</label>
+            <div class="password-wrap">
+              <input
+                [type]="hideConfirmPassword() ? 'password' : 'text'"
+                formControlName="confirmPassword"
+                placeholder="Confirm your password"
+              />
+              <button type="button" class="eye-btn" (click)="toggleConfirmPassword()">
+                {{ hideConfirmPassword() ? 'Show' : 'Hide' }}
+              </button>
+            </div>
+            <small class="error" *ngIf="confirmPasswordError()">{{ confirmPasswordError() }}</small>
+          </div>
+
+          <label class="checkbox-row">
+            <input type="checkbox" checked />
+            <span>I agree to the terms of service and privacy policy</span>
+          </label>
+
+          <button class="primary-btn" type="submit" [disabled]="isSubmitting()">
+            {{ isSubmitting() ? 'Creating account...' : 'Sign Up' }}
+          </button>
+
+          <p class="success" *ngIf="successMessage()">{{ successMessage() }}</p>
+          <p class="error api-error" *ngIf="apiError()">{{ apiError() }}</p>
+
+          <div class="divider">
+            <span>or continue with</span>
+          </div>
+
+          <button type="button" class="social-btn" (click)="googleLogin()">
+            <span class="social-icon">G</span>
+            Continue with Google
+          </button>
+
+          <div class="google-signup-note">
+            Choose a role first. Instructor accounts require admin approval after sign up.
+          </div>
+
+          <div class="form-footer">
+            Already have an account?
+            <a routerLink="/login">Sign in</a>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+</div>

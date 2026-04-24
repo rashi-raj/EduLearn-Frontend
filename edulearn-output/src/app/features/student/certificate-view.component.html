@@ -1,0 +1,107 @@
+<div class="certificate-page">
+
+  <!-- Print controls (hidden during print) -->
+  <div class="controls no-print">
+    <button class="back-btn" (click)="goBack()">← Back to Certificates</button>
+    <button class="print-btn" (click)="printCertificate()">🖨️ Print / Download PDF</button>
+  </div>
+
+  <!-- Loading state -->
+  <div class="loading-state no-print" *ngIf="isLoading()">
+    <p>Loading certificate...</p>
+  </div>
+
+  <!-- Error state -->
+  <div class="error-state no-print" *ngIf="errorMessage() && !isLoading()">
+    <h2>Certificate Unavailable</h2>
+    <p>{{ errorMessage() }}</p>
+    <button class="back-btn" (click)="goBack()">Go Back</button>
+  </div>
+
+  <!-- Certificate -->
+  <div class="certificate-wrapper" *ngIf="!isLoading() && !errorMessage()">
+    <div class="certificate">
+
+      <!-- Outer decorative border -->
+      <div class="cert-border">
+
+        <!-- Inner content -->
+        <div class="cert-inner">
+
+          <!-- Top ornaments -->
+          <div class="corner corner-tl"></div>
+          <div class="corner corner-tr"></div>
+          <div class="corner corner-bl"></div>
+          <div class="corner corner-br"></div>
+
+          <!-- Header -->
+          <div class="cert-header">
+            <div class="cert-logo">🎓</div>
+            <h1 class="inst-name">EduLearn Institute</h1>
+            <p class="inst-tagline">Excellence in Digital Education</p>
+          </div>
+
+          <!-- Divider -->
+          <div class="cert-divider">
+            <span class="divider-star">✦</span>
+          </div>
+
+          <!-- Title -->
+          <h2 class="cert-title">Certificate of Completion</h2>
+
+          <!-- Body -->
+          <p class="cert-body-text">This is to certify that</p>
+
+          <h3 class="student-name">{{ studentName() }}</h3>
+
+          <p class="cert-body-text">has successfully completed the course</p>
+
+          <h4 class="course-name">"{{ courseTitle() }}"</h4>
+
+          <p class="cert-body-text category-line">
+            in the <strong>{{ courseCategory() }}</strong> learning track
+          </p>
+
+          <!-- Date & ID -->
+          <div class="cert-meta">
+            <div class="meta-item">
+              <span class="meta-label">Date of Completion</span>
+              <span class="meta-value">{{ completionDate() }}</span>
+            </div>
+            <div class="cert-seal">
+              <div class="seal-inner">
+                <span>✦</span>
+                <strong>VERIFIED</strong>
+              </div>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Certificate ID</span>
+              <span class="meta-value">{{ certificateId() }}</span>
+            </div>
+          </div>
+
+          <!-- Signatures -->
+          <div class="cert-signatures">
+            <div class="signature-block">
+              <div class="sig-line"></div>
+              <p class="sig-name">Dr. R. Kumar</p>
+              <p class="sig-title">Director of Education</p>
+            </div>
+
+            <div class="signature-block">
+              <div class="sig-line"></div>
+              <p class="sig-name">Prof. S. Sharma</p>
+              <p class="sig-title">Head of Academics</p>
+            </div>
+          </div>
+
+          <!-- Footer -->
+          <div class="cert-footer">
+            <p>This certificate is digitally issued by EduLearn Institute and can be verified online.</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
